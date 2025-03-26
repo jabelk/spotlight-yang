@@ -1,0 +1,35 @@
+module person-skills {
+  namespace "http://com/example/personskills";
+  prefix person-skills;
+
+  container skills {
+  leaf person-name {
+    type string;
+  }
+
+  list skill-list {
+    key "skill-name";
+    leaf skill-name {
+      type string;
+    }
+    leaf proficiency {
+        type enumeration {
+          enum beginner;
+          enum intermediate;
+          enum advanced;
+        }
+      }
+    
+    leaf time-spent
+    {
+      type uint16;
+      mandatory true;
+    }
+  }
+
+  leaf-list hobbies {
+    type string;
+    }
+  }
+
+}

@@ -1,0 +1,21 @@
+module router-model {
+  namespace "http://com/example/routermodel";
+  prefix router-model;
+  import ietf-inet-types {
+    prefix inet; 
+  }
+  container router {
+    leaf name {
+      type string;
+    }
+    leaf address {
+      type inet:ipv4-address;
+    }
+    leaf operational-status {
+      type enumeration {
+        enum up;
+        enum down;
+      }
+    }
+  }
+}

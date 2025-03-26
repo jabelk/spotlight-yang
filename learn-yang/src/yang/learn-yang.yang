@@ -1,0 +1,11 @@
+module learn-yang {
+  namespace "http://com/example/learnyang";
+  prefix learn-yang;
+
+  container person {
+    leaf name { type string;}
+    leaf age {type uint32;}
+    leaf favorite-color { type string;}
+}
+
+}
