@@ -1,0 +1,35 @@
+module interface-mode-config {
+  namespace "http://com/example/interfacemode";
+  prefix imc;
+
+  container interface-config {
+    list interface {
+      key "interface-name";
+
+      leaf interface-name {
+        type string;
+      }
+
+      choice switchport-mode {
+        case access {
+          leaf access-vlan {
+            type uint16 {
+              range "1..4094";
+            }
+            description
+              "VLAN ID for access mode (1-4094)";
+          }
+        }
+        case trunk {
+          leaf-list allowed-vlans {
+            type uint16 {
+              range "1..4094";
+            }
+            description
+              "List of VLANs allowed on trunk (1-4094)";
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+module employee-checkin {
+  namespace "http://com/example/employee-checkin";
+  prefix emp;
+
+  grouping person-info {
+    leaf name {
+      type string;
+    }
+    leaf role {
+      type string;
+    }
+  }
+
+  container employee-status {
+    uses person-info;
+
+    leaf checked-in {
+      type boolean;
+      default "false";
+    }
+
+    leaf checkin-time {
+      type string;
+      mandatory true;
+    }
+
+    must "checked-in = 'false' or boolean(checkin-time)" {
+      error-message
+        "Check-in time must be provided if employee is checked in.";
+    }
+  }
+}
+
