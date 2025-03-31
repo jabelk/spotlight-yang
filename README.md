@@ -45,13 +45,14 @@ This model mirrors real-world switchport logic — enforcing that a port is eith
 
 ---
 
-### 5. `employee-checkin`
-A non-networking model that highlights:
-- `grouping` and `uses` to reuse person attributes
-- A `must` constraint to ensure `checkin-time` is set only when `checked-in` is `true`
-- Use of `default` and `mandatory` to enforce clean logic
+### 6. `user-timeout-config`
+Demonstrates:
+- Use of `default` and `units` for clear and safe input (`timeout` in seconds)
+- `leafref` validation across containers (`apply-to-user` must match an existing `username`)
+- Real-world scenario modeling users and linking login policies to user records
 
-It’s a great example for applying YANG outside of infrastructure — modeling real-world policies and intent.
+This model is ideal for showing structure reuse, default behavior, and strict cross-referencing between related data.
+
 
 
 ## 🔧 How to Use
@@ -105,13 +106,22 @@ commit
 interface-config interface gi0/3 interface-name gi0/3 access-vlan 5000
 commit
 
-# employee-checkin (grouping + must)
-employee-status name Alice role Engineer checked-in true checkin-time 09:00
+# Create a user (uses default timeout of 30 seconds)
+user-settings user jason
 commit
 
-# This will fail due to missing checkin-time when checked-in is true
-employee-status name Bob role Analyst checked-in true
+# Set a custom timeout
+user-settings user jason timeout 60
 commit
+
+# Reference the existing user in a policy
+login-policies policy admin-policy policy-name admin-policy apply-to-user jason
+commit
+
+# This will fail because the user 'ghost' does not exist
+login-policies policy broken-policy policy-name broken-policy apply-to-user ghost
+commit
+
 
 
 ```
