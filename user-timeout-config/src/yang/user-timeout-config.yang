@@ -1,0 +1,38 @@
+module user-timeout-config {
+  namespace "http://com/example/usertimeout";
+  prefix utc;
+
+  container user-settings {
+    list user {
+      key "username";
+
+      leaf username {
+        type string;
+      }
+
+      leaf timeout {
+        type uint16;
+        default 30;
+        units "seconds";
+        description "Session timeout before automatic logout.";
+      }
+    }
+  }
+
+  container login-policies {
+    list policy {
+      key "policy-name";
+
+      leaf policy-name {
+        type string;
+      }
+
+      leaf apply-to-user {
+        type leafref {
+          path "/utc:user-settings/user/username";
+        }
+        description "Reference to a defined user";
+      }
+    }
+  }
+}

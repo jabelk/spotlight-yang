@@ -1,7 +1,7 @@
 <ncs-package xmlns="http://tail-f.com/ns/ncs-packages">
-  <name>employee-checkin</name>
+  <name>user-timeout-config</name>
   <package-version>1.0</package-version>
-  <description>Template-based employee-checkin resource facing service</description>
+  <description>Template-based user-timeout-config resource facing service</description>
   <ncs-min-version>6.2</ncs-min-version>
 
   <!-- It's possible to add more components to the -->

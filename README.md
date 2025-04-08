@@ -16,13 +16,13 @@ Great for understanding the fundamentals of YANG syntax and structure.
 
 ---
 
-### 2. `router`
+### 2. `router-model`
 Introduces:
-- Input validation using regex (IPv4 address)
-- Mandatory fields
-- Status fields like `oper-status`
+- IPv4 address validation using `ietf-inet-types:ipv4-address`
+- `enumeration` for `operational-status` with values `up` and `down`
+- A clean container structure representing a basic router object
 
-This model demonstrates how YANG enforces data quality through constraints.
+This model demonstrates schema-driven definition of a network device and its operational state.
 
 ---
 
@@ -45,7 +45,7 @@ This model mirrors real-world switchport logic — enforcing that a port is eith
 
 ---
 
-### 6. `user-timeout-config`
+### 5. `user-timeout-config`
 Demonstrates:
 - Use of `default` and `units` for clear and safe input (`timeout` in seconds)
 - `leafref` validation across containers (`apply-to-user` must match an existing `username`)
@@ -75,8 +75,12 @@ Sample Commands
 learn-yang person name Alice age 30 favorite-color Blue
 commit
 
-# router (regex IP address validation)
+# router-model (IPv4 and enum validation)
 router name R1 address 192.168.1.1 oper-status up
+commit
+
+# This will fail due to invalid IP format
+router name R2 address not-an-ip oper-status down
 commit
 
 # This will fail due to invalid IP format
@@ -95,7 +99,6 @@ skills skill-list JSON proficiency expert
 commit
 
 # interface-mode-config (choice with range)
- (choice with range)
 interface-config interface gi0/1 interface-name gi0/1 access-vlan 10
 commit
 
@@ -121,11 +124,7 @@ commit
 # This will fail because the user 'ghost' does not exist
 login-policies policy broken-policy policy-name broken-policy apply-to-user ghost
 commit
-
-
-
 ```
-
 
 ---
 
@@ -133,4 +132,3 @@ commit
 
 - [Cisco NSO Dev Center](https://developer.cisco.com/nso/)
 - [YANG Language RFC 7950](https://datatracker.ietf.org/doc/html/rfc7950)
-
